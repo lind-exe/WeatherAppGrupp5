@@ -10,6 +10,8 @@
 
 
             Console.WriteLine("Hej hej test");
+
+            Console.WriteLine("Min egna edit");
         }
     }
 }
