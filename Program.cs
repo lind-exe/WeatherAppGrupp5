@@ -7,6 +7,9 @@
             Console.WriteLine("Hello, World!");
 
             Console.WriteLine("asdasdwefwe");
+
+
+            Console.WriteLine("Hej hej test");
         }
     }
 }
