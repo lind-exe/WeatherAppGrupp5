@@ -4,17 +4,56 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Transactions;
+using System.Text.RegularExpressions;
 using WeatherApp5.Data;
 
 namespace WeatherApp5.Methods
 {
     internal class View
     {
-        internal static void AverageTempPerDay()
+        public static string path = "../../../Data/tempdata5-med-fel.txt";
+        internal static void AverageTempPerDay(Data.WeatherData weatherData)
         {
-            Console.WriteLine("Enter date you wish to view average temps for: ");
-            string input = Console.ReadLine();
+            Console.Write("Enter month you wish to view average temps for: ");
+            int month = int.Parse(Console.ReadLine());
+            weatherData.Month = month;
+            Console.Write("Enter day you wish to view average temps for: ");
+            int day = int.Parse(Console.ReadLine());
+            weatherData.Day = day;
 
+            List<string> allData = File.ReadAllLines(path).ToList();
+            Regex reg = new Regex(@$"2016-{month}-{day}");
+
+            List<double> temps = new();
+            foreach (var data in allData)
+            {
+                Match match = reg.Match(data);
+                if (match.Success)
+                {
+                    Regex reg2 = new Regex(@"(?<=,)(-?\\s?\\d+.\\d)");
+                    Match match2 = reg2.Match(data);
+                    if (match.Success)
+                    {
+                        temps.Add(double.Parse(data));
+                    }
+                }
+            }
+
+
+            //WeatherData wD = new();
+            //{
+            //    wD.Year = weatherData.Year;
+            //    wD.Month = File.ReadAllLines(path + new Regex(@$"2016-{month}"),
+            //    wD.Day = File.ReadAllLines(path + new Regex(@$"2016-{month}-{day}")
+
+
+
+
+
+
+
+            //};
 
         }
 

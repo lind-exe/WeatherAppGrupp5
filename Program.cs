@@ -14,6 +14,8 @@ namespace WeatherApp5
             Console.WriteLine("Hej hej test");
 
             Console.WriteLine("Min egna edit");
+
+            Methods.Menus.Show("Main");
         }
     }
 }

@@ -43,7 +43,7 @@ namespace WeatherApp5.Methods
                     switch (menu)
                     {
                         case Main.Average_Temp_Per_Day:
-                            View.AverageTempPerDay();
+                            View.AverageTempPerDay(new Data.WeatherData());
 
                             goMain = false;
                             break;
