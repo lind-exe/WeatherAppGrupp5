@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherApp5.Data;
 
 namespace WeatherApp5.Methods
 {
@@ -12,8 +13,6 @@ namespace WeatherApp5.Methods
         {
             Console.WriteLine("Enter date you wish to view average temps for: ");
             string input = Console.ReadLine();
-
-
 
 
         }

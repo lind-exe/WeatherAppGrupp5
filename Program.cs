@@ -1,4 +1,6 @@
-﻿namespace WeatherApp5
+﻿using WeatherApp5.Data;
+
+namespace WeatherApp5
 {
     internal class Program
     {
