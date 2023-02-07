@@ -64,6 +64,7 @@ namespace WeatherApp5.Methods
             string month = "";
             string day = "";
             string text = File.ReadAllText("../../../Data/tempdata5-med-fel.txt");
+            string[] text2 = File.ReadAllLines("../../../Data/tempdata5-med-fel.txt");
             int y = 0;
             for (int i = 6; i <= 12; i++)
             {
@@ -194,7 +195,24 @@ namespace WeatherApp5.Methods
 
         internal static void HumiditySortedAndAverageHumitidy()
         {
-            throw new NotImplementedException();
+            string[] textArr = File.ReadAllLines("../../../Data/tempdata5-med-fel.txt");
+            string[] newArr;
+            foreach (var i in textArr)
+            {
+                newArr = GetLine(i);
+                Console.WriteLine(newArr[0]+"\n"+ newArr[1] + "\n" + newArr[2] + "\n" + newArr[3]);
+                Console.ReadKey();
+                Console.Clear();
+            }
+            
+        }
+        internal static string[] GetLine(string line)
+        {
+
+            var result = line.Split(",");
+            return result;
+
+            
         }
 
         internal static void MeterologicDates()
