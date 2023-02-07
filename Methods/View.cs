@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Text.RegularExpressions;
 using WeatherApp5.Data;
+using System.Runtime.CompilerServices;
 
 namespace WeatherApp5.Methods
 {
@@ -59,75 +60,136 @@ namespace WeatherApp5.Methods
 
         internal static void AverageTempSorted()
         {
-            //Console.WriteLine("Average temps sorted from highest to lowest: ");
-
-            //List<double> list = new List<double>();
-            //using (StreamReader r = new StreamReader("../../../Data/tempdata5-med fel.txt"))
-            //{
-            //    string content = r.ReadToEnd();
-
-            //    foreach (Match m in Regex.Matches(content, "Inne,(-?\\s?\\d+.\\d)"))
-            //    {
-            //        foreach (Group g in m.Groups)
-            //        {
-            //            if (int.Parse(g.Name) == 1)
-            //            {
-            //                double temp = double.Parse(g.Value, System.Globalization.CultureInfo.InvariantCulture);
-            //                list.Add(temp);
-
-            //            }
-            //        }
-            //    }
-            //}
-            //list.Sort();
-            //list.Reverse();
-            //foreach (var item in list)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            //Console.WriteLine(list.Count());
-
+            Dictionary<string, double> temps = new Dictionary<string, double>();
+            string month = "";
+            string day = "";
+            string text = File.ReadAllText("../../../Data/tempdata5-med-fel.txt");
+            int y = 0;
             for (int i = 6; i <= 12; i++)
             {
-                Console.WriteLine("\tMånad " + i);
+                y = 0;
+                //Console.WriteLine("\tMånad " + i);
                 if (i < 10)
                 {
-                    for (int x = 1; x < 31; x++)
-                    {
-                        if (x < 10)
-                        {
-                            Regex regex = new Regex($"2016-0{i}-0{x}");
-                            MatchCollection matches = regex.Matches(File.ReadAllText("../../../Data/tempdata5-med fel.txt"));
-                            Console.WriteLine("dag " + x + ": " + matches.Count);
-                        }
-                        else
-                        {
-                            Regex regex2 = new Regex($"2016-0{i}-{x}");
-                            MatchCollection matches = regex2.Matches(File.ReadAllText("../../../Data/tempdata5-med fel.txt"));
-                            Console.WriteLine("dag " + x + ": " + matches.Count);
-                        }
-                    };
+                    month = "0" + i;
                 }
                 else
                 {
-                    for (int x = 1; x < 31; x++)
-                    {
-                        if (x < 10)
-                        {
-                            Regex regex = new Regex($"2016-{i}-0{x}");
-                            MatchCollection matches = regex.Matches(File.ReadAllText("../../../Data/tempdata5-med fel.txt"));
-                            Console.WriteLine("dag " + x + ": " + matches.Count);
-                        }
-                        else
-                        {
-                            Regex regex2 = new Regex($"2016-{i}-{x}");
-                            MatchCollection matches = regex2.Matches(File.ReadAllText("../../../Data/tempdata5-med fel.txt"));
-                            Console.WriteLine("dag " + x + ": " + matches.Count);
-                        }
-                    };
+                    month = i.ToString();
                 }
+                for (int x = 0; x < 31; x++)
+                {
+                    if (x < 10)
+                    {
+                        day = "0" + x;
+                    }
+                    else
+                    {
+                        day = x.ToString();
+                    }
+                    string pattern = $"2016-{month}-{day}\\s(?:\\d+:\\d+:\\d+),Inne,(-?\\s?\\d+.\\d)";
+                    foreach (Match m in Regex.Matches(text, pattern))
+                    {
+                        foreach (Group group in m.Groups)
+                        {
+                            if (int.Parse(group.Name) == 1)
+                            {
+                                Console.WriteLine("dag " + day + ": " + group.Value);                               
+                                y++;
+                                
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine("Matches: " + y++);
+                Console.ReadLine();
+                Console.Clear();
+
             }
-            Console.ReadLine();
+            
+
+
+
+            //for (int i = 6; i <= 12; i++)
+            //{
+            //    Console.WriteLine("\tMånad " + i);
+            //    if (i < 10)
+            //    {
+            //        for (int x = 1; x < 31; x++)
+            //        {
+            //            if (x < 10)
+            //            {
+            //                string text = File.ReadAllText("../../../Data/tempdata5-med-fel.txt");
+            //                string pattern = $"2016-0{i}-0{x}\\s(?:\\d+:\\d+:\\d+),Inne,(-?\\s?\\d+.\\d)";
+            //                foreach (Match m in Regex.Matches(text, pattern))
+            //                {
+            //                    foreach (Group group in m.Groups)
+            //                    {
+            //                        if (int.Parse(group.Name) == 1)
+            //                        {
+            //                            Console.WriteLine("dag " + x + ": " + group.Name + " " + group.Value);
+            //                            test.Add(group.Value);
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //            else
+            //            {
+            //                string text = File.ReadAllText("../../../Data/tempdata5-med-fel.txt");
+            //                string pattern = $"2016-0{i}-{x}\\s(?:\\d+:\\d+:\\d+),Inne,(-?\\s?\\d+.\\d)";
+            //                foreach (Match m in Regex.Matches(text, pattern))
+            //                {
+            //                    foreach (Group group in m.Groups)
+            //                    {
+            //                        if (int.Parse(group.Name) == 1)
+            //                        {
+            //                            Console.WriteLine("dag " + x + ": " + group.Name + " " + group.Value);
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        };
+            //    }
+            //    else
+            //    {
+            //        for (int x = 1; x < 31; x++)
+            //        {
+            //            if (x < 10)
+            //            {
+            //                string text = File.ReadAllText("../../../Data/tempdata5-med-fel.txt");
+            //                string pattern = $"2016-{i}-0{x}\\s(?:\\d+:\\d+:\\d+),Inne,(-?\\s?\\d+.\\d)";
+            //                foreach (Match m in Regex.Matches(text, pattern))
+            //                {
+            //                    foreach (Group group in m.Groups)
+            //                    {
+            //                        if (int.Parse(group.Name) == 1)
+            //                        {
+            //                            Console.WriteLine("dag " + x + ": " + group.Name + " " + group.Value);
+
+
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //            else
+            //            {
+            //                string text = File.ReadAllText("../../../Data/tempdata5-med-fel.txt");
+            //                string pattern = $"2016-{i}-{x}\\s(?:\\d+:\\d+:\\d+),Inne,(-?\\s?\\d+.\\d)";
+            //                foreach (Match m in Regex.Matches(text, pattern))
+            //                {
+            //                    foreach (Group group in m.Groups)
+            //                    {
+            //                        if (int.Parse(group.Name) == 1)
+            //                        {
+            //                            Console.WriteLine("dag " + x + ": " + group.Name + " " + group.Value);
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        };
+            //    }
+            //    Console.ReadLine();
+            //}         
         }
 
         internal static void HumiditySortedAndAverageHumitidy()
