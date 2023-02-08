@@ -1,4 +1,5 @@
 ﻿using WeatherApp5.Data;
+using WeatherApp5.Methods;
 
 namespace WeatherApp5
 {
@@ -6,15 +7,6 @@ namespace WeatherApp5
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-
-            Console.WriteLine("asdasdwefwe");
-
-
-            Console.WriteLine("Hej hej test");
-
-            Console.WriteLine("Min egna edit");
-
             Methods.Menus.Show("Main");
         }
     }

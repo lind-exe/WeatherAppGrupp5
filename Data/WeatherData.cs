@@ -9,9 +9,6 @@ namespace WeatherApp5.Data
 {
     internal class WeatherData
     {
-        public int Year = 2016;
-        public int Month { get; set; }
-        public int Day { get; set; }
         public double Temperature { get; set; }
         public double Humidity { get; set; }
         public string Location{ get; set; }
