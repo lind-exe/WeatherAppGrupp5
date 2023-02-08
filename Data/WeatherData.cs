@@ -14,4 +14,5 @@ namespace WeatherApp5.Data
         public string Location{ get; set; }
         public DateTime Date { get; set; }
     }
+    
 }
