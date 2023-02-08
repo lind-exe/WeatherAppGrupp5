@@ -12,9 +12,9 @@ namespace WeatherApp5.Data
         public int Year = 2016;
         public int Month { get; set; }
         public int Day { get; set; }
-        public List<double> Temperature { get; set; }
-        public List<double> Humidity { get; set; }
-        public bool Inside { get; set; }
-
+        public double Temperature { get; set; }
+        public double Humidity { get; set; }
+        public string Location{ get; set; }
+        public DateTime Date { get; set; }
     }
 }

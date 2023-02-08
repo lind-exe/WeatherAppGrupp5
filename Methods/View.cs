@@ -8,6 +8,7 @@ using System.Transactions;
 using System.Text.RegularExpressions;
 using WeatherApp5.Data;
 using System.Runtime.CompilerServices;
+using System.Globalization;
 
 namespace WeatherApp5.Methods
 {
@@ -196,15 +197,27 @@ namespace WeatherApp5.Methods
         internal static void HumiditySortedAndAverageHumitidy()
         {
             string[] textArr = File.ReadAllLines("../../../Data/tempdata5-med-fel.txt");
-            string[] newArr;
+            string[] data;
+            List<WeatherData> june = new List<WeatherData>();
+
             foreach (var i in textArr)
             {
-                newArr = GetLine(i);
-                Console.WriteLine(newArr[0]+"\n"+ newArr[1] + "\n" + newArr[2] + "\n" + newArr[3]);
-                Console.ReadKey();
-                Console.Clear();
+                data = GetLine(i);
+                //Console.WriteLine(data[0]+"\n"+ data[1] + "\n" + data[2] + "\n" + data[3]);
+                WeatherData oneLine = new WeatherData()
+                {
+                    Date = DateTime.Parse(data[0], CultureInfo.GetCultureInfo("sv-SE").DateTimeFormat),
+                    Location = data[1],
+                    Temperature = double.Parse(data[2], System.Globalization.CultureInfo.InvariantCulture),
+                    Humidity = double.Parse(data[3], System.Globalization.CultureInfo.InvariantCulture),
+
+                };
+                june.Add(oneLine);
             }
-            
+            foreach (var i in june)
+            {
+                Console.WriteLine(i.Date + " " + i.Location + " " + i.Temperature + " " + i.Humidity);
+            }
         }
         internal static string[] GetLine(string line)
         {
