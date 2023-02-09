@@ -42,5 +42,17 @@ namespace WeatherApp5.Methods
             }
             return input;
         }
+        internal static void WrongInput()
+        {
+            Console.Clear();
+            Console.SetCursorPosition(2, 2);
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("WRONGINPUT");
+            Thread.Sleep(500);
+            Console.ResetColor();
+            Console.Clear();
+            Menus.Show("Main");
+        }
     }
 }

@@ -38,37 +38,29 @@ namespace WeatherApp5.Methods
                     }
                     else
                     {
-                        //Helpers.WrongInput();
+                        Helpers.WrongInput();
                     }
                     switch (menu)
                     {
                         case Main.Average_Temp_Per_Day:
                             View.AverageTempPerDay();
-
-                            goMain = false;
                             break;
                         case Main.Average_Temp_Sorted:
                             View.AverageTempSorted();
-
-                            
-                            goMain = false;
                             break;
                         case Main.Humidity_Sorted_And_Average_Humidity:
                             View.HumiditySortedAndAverageHumitidy();
-
-                            goMain = false;
                             break;
                         case Main.Mold_Risk:
                             View.MoldRisk();
-
-                            goMain = false;
                             break;
                         case Main.Meterologic_Dates:
                             View.MeterologicDates();
-
-                            goMain = false;
                             break;
                     }
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey(true);
+                    Console.Clear();
                 }
             }
         }

@@ -194,15 +194,53 @@ namespace WeatherApp5.Methods
                 StartDate = StartDate.AddDays(DayInterval);
             }
 
+            var dataList = data.OrderBy(x => x.Key).ToList();
 
-            // 2016-10-04 är rätt datum för meterologisk höst
-
-            var sorted = data.OrderBy(x => x.Key);
-
-            foreach (var k in sorted)
+            int i = 0;
+            Console.WriteLine("1. Visa meterologisk höst\n2. Visa meterologisk vinter");
+            int input = Helpers.TryNumber(2, 1);
+            switch (input)
             {
-                Console.WriteLine(k.Key + " " + k.Value);
-            }
+                case 1:
+                    while (i < dataList.Count)
+                    {
+                        if (dataList[i].Value < 10 && dataList[i - 1].Value < 10 && dataList[i - 2].Value < 10 && dataList[i - 3].Value < 10 && dataList[i - 4].Value < 10)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(dataList[i - 5].Key + " " + dataList[i - 5].Value + " °C");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine(dataList[i - 4].Key + " " + dataList[i - 4].Value + " °C" + " meterologisk höst för 2016 inträffar detta datum");
+                            Console.WriteLine(dataList[i - 3].Key + " " + dataList[i - 3].Value + " °C");
+                            Console.WriteLine(dataList[i - 2].Key + " " + dataList[i - 2].Value + " °C");
+                            Console.WriteLine(dataList[i - 1].Key + " " + dataList[i - 1].Value + " °C");
+                            Console.WriteLine(dataList[i].Key + " " + dataList[i].Value + " °C");
+                            Console.ResetColor();
+                            break;
+                        }
+                        i++;
+                    }
+                    break;
+                case 2:
+                    while (i < dataList.Count)
+                    {
+                        if (dataList[i].Value < 0 && dataList[i - 1].Value < 0 && dataList[i - 2].Value < 0 && dataList[i - 3].Value < 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(dataList[i - 4].Key + " " + dataList[i - 4].Value + " °C");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine(dataList[i - 3].Key + " " + dataList[i - 3].Value + " °C" + " meterologisk vinter för 2016 inträffar detta datum, ish");
+                            Console.WriteLine(dataList[i - 2].Key + " " + dataList[i - 2].Value + " °C");
+                            Console.WriteLine(dataList[i - 1].Key + " " + dataList[i - 1].Value + " °C");
+                            Console.WriteLine(dataList[i].Key + " " + dataList[i].Value + " °C");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(dataList[i + 1].Key + " " + dataList[i + 1].Value + " °C");
+                            Console.ResetColor();
+                            break;
+                        }
+                        i++;
+                    }
+                    break;
+            } 
         }
     }
 }
