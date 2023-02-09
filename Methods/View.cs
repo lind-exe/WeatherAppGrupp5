@@ -19,18 +19,20 @@ namespace WeatherApp5.Methods
         internal static void AverageTempPerDay()
         {
             List<WeatherData> weatherData = RegexData.GetData();
-            
-            Console.Write("Choose a day to check averagetemp (YYYY-MM-DD): ");
-            string date = Console.ReadLine();
 
-            var chosenData = weatherData.Where(x => x.Date.Date == DateTime.Parse(date)).Where(x => x.Location == "Inne").ToList();
+            Console.Write("Välj en dag för att kolla medeltemp: (YYYY-MM-DD): ");
+            string date = Console.ReadLine();
+            Console.Write("Inne eller ute: ");
+            string inOrOut = Console.ReadLine();
+
+            var chosenData = weatherData.Where(x => x.Date.Date == DateTime.Parse(date)).Where(x => x.Location == inOrOut).ToList();
             double counter = 0;
 
-            
+
             foreach (var c in chosenData)
             {
-                    Console.WriteLine(c.Date + " " + c.Location + " " + c.Temperature + " " + c.Humidity);
-                    counter += c.Temperature;
+                Console.WriteLine(c.Date + " " + c.Location + " " + c.Temperature + " " + c.Humidity);
+                counter += c.Temperature;
             }
             double result = counter / chosenData.Count;
             Console.WriteLine();
@@ -42,7 +44,37 @@ namespace WeatherApp5.Methods
 
         internal static void AverageTempSorted()
         {
+            List<WeatherData> weatherData = RegexData.GetData();
+            List<DataPerDay> listDataPerDay = new();
 
+            DateTime StartDate = new DateTime(2016, 6, 1);
+            DateTime EndDate = new DateTime(2016, 12, 31);
+            int DayInterval = 1;
+
+            Console.WriteLine("Inne eller Ute? ");
+            string inOrOut = Console.ReadLine();
+
+            List<DateTime> dateList = new List<DateTime>();
+            while (StartDate.AddDays(DayInterval) <= EndDate)
+            {
+
+                var chosenData = weatherData.Where(x => x.Date.Date == StartDate).Where(x => x.Location == inOrOut).ToList();
+                double counter = 0;
+
+
+                foreach (var c in chosenData)
+                {
+                    counter += c.Temperature;
+                }
+                double result = counter / chosenData.Count;
+                if (!double.IsNaN(result))
+                {
+                    Console.WriteLine(StartDate.ToString("yyyy-MM-dd") + "- medeltemp: " + Math.Round(result, 1) + "°");
+
+                }
+
+                StartDate = StartDate.AddDays(DayInterval);
+            }
         }
 
         internal static void HumiditySortedAndAverageHumitidy()
