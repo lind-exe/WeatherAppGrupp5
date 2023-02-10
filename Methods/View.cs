@@ -159,7 +159,9 @@ namespace WeatherApp5.Methods
 
                 StartDate = StartDate.AddDays(DayInterval);
             }
-            foreach (var d in data)
+
+            var moldRiskSorted = data.OrderBy(x => x.Value);
+            foreach (var d in moldRiskSorted)
             {
                 double riskForMold = d.Value * 1.33;
                 Console.WriteLine(d.Key + " mögelrisken är " + Math.Round(riskForMold, 2)  + " på en skala mellan 0-100");
