@@ -14,8 +14,9 @@ namespace WeatherApp5.Methods
             Average_Temp_Sorted,
             Humidity_Sorted_And_Average_Humidity,
             Mold_Risk,
-            Meterologic_Dates,
-            Save_To_File
+            Show_And_Save_Meterologic_Dates_To_File,
+            Save_Temps_And_Humidity_To_File,
+
         }
         public static void Show(string value)
         {
@@ -55,10 +56,10 @@ namespace WeatherApp5.Methods
                         case Main.Mold_Risk:
                             View.MoldRisk();
                             break;
-                        case Main.Meterologic_Dates:
+                        case Main.Show_And_Save_Meterologic_Dates_To_File:
                             View.MeterologicDates();
                             break;
-                        case Main.Save_To_File:
+                        case Main.Save_Temps_And_Humidity_To_File:
                             Helpers.SaveFiles();
                             
                             break;
