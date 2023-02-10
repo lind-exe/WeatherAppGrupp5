@@ -5,7 +5,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
-using System.Text.RegularExpressions;
 using WeatherApp5.Data;
 using System.Runtime.CompilerServices;
 using System.Globalization;
@@ -20,7 +19,7 @@ namespace WeatherApp5.Methods
         public static string path = "../../../Data/tempdata5-med-fel.txt";
         internal static void AverageTempPerDay()
         {
-            List<WeatherData> weatherData = RegexData.GetData();
+            List<IWeatherDate> weatherData = RegexData.GetData();
 
             Console.Write("Välj en dag för att kolla medeltemp: (YYYY-MM-DD): ");
             string date = Console.ReadLine();
@@ -46,7 +45,7 @@ namespace WeatherApp5.Methods
 
         internal static void AverageTempSorted()
         {
-            List<WeatherData> weatherData = RegexData.GetData();
+            List<IWeatherDate> weatherData = RegexData.GetData();
             Dictionary<string, double> data = new Dictionary<string, double>();
 
             DateTime StartDate = new DateTime(2016, 6, 1);
@@ -67,7 +66,7 @@ namespace WeatherApp5.Methods
 
                 if (!double.IsNaN(result))
                 {
-                    //Console.WriteLine(StartDate.ToString("yyyy-MM-dd") + " - Medeltemp: " + Math.Round(result, 1) + "°");
+                    
                     data.Add(StartDate.ToString("yyyy-MM-dd"), Math.Round(result, 1));
                 }
 
@@ -91,7 +90,7 @@ namespace WeatherApp5.Methods
 
         internal static void HumiditySortedAndAverageHumitidy()
         {
-            List<WeatherData> weatherData = RegexData.GetData();
+            List<IWeatherDate> weatherData = RegexData.GetData();
             Dictionary<string, double> data = new Dictionary<string, double>();
 
             DateTime StartDate = new DateTime(2016, 6, 1);
@@ -134,9 +133,9 @@ namespace WeatherApp5.Methods
 
         }
 
-        internal static void MoldRisk()
+        internal static void MoldRisk(Menus.MyDelegate del)
         {
-            List<WeatherData> weatherData = RegexData.GetData();
+            List<IWeatherDate> weatherData = RegexData.GetData();
             Dictionary<string, double> data = new Dictionary<string, double>();
 
             DateTime StartDate = new DateTime(2016, 6, 1);
@@ -149,7 +148,7 @@ namespace WeatherApp5.Methods
                 double result = 0;
                 foreach (var c in chosenData)
                 {
-                    result = (c.Temperature + c.Humidity) / 2;
+                    result = del(c.Temperature, c.Humidity);
                 }
 
                 if (result != 0)
@@ -170,7 +169,7 @@ namespace WeatherApp5.Methods
         internal static void MeterologicDates()
         {
             string savePath = "../../../Data/";
-            List<WeatherData> weatherData = RegexData.GetData();
+            List<IWeatherDate> weatherData = RegexData.GetData();
             Dictionary<string, double> data = new Dictionary<string, double>();
             List<string> meterologicDates = new List<string>();
             DateTime StartDate = new DateTime(2016, 8, 1);
@@ -247,6 +246,8 @@ namespace WeatherApp5.Methods
                 i++;
             }
             File.AppendAllText(savePath + "Log.txt", $"{meterologicDates[0]}\n{meterologicDates[1]}\n");
+
+            
         }
     }
 }

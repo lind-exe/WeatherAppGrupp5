@@ -11,7 +11,7 @@ namespace WeatherApp5.Methods
     internal class RegexData
     {
         public static string path = "../../../Data/tempdata5-med-fel.txt";
-        internal static List<WeatherData> GetData()
+        internal static List<IWeatherDate> GetData()
         {
             string pattern = "(?<dateTime>\\d+-\\d{2}-\\d{1,2}\\s\\d{2}:\\d{2}:\\d{2}),(?<location>\\w{3,4}),\\s*(?<temp>-?\\d+.\\d),(?<humidity>\\d+)";
             
@@ -20,11 +20,11 @@ namespace WeatherApp5.Methods
                 .Where(path => regex.IsMatch(path))
                 .ToList();
 
-            List<WeatherData> allWeatherData = new();
+            List<IWeatherDate> allWeatherData = new();
 
             foreach (var data in allData)
             {
-                WeatherData weatherData = new WeatherData();
+                WeatherDate weatherData = new WeatherDate();
                 foreach (Match m in Regex.Matches(data, pattern))
                 {
                     if (m.Groups.Count > 0)

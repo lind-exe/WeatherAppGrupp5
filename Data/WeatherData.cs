@@ -7,12 +7,19 @@ using System.Threading.Tasks;
 
 namespace WeatherApp5.Data
 {
-    internal class WeatherData
+    internal interface IWeatherDate
     {
         public double Temperature { get; set; }
         public double Humidity { get; set; }
         public string Location{ get; set; }
         public DateTime Date { get; set; }
     }
-    
+    internal class WeatherDate : IWeatherDate
+    {
+        public double Temperature { get; set; }
+        public double Humidity { get; set; }
+        public string Location { get; set; }
+        public DateTime Date { get; set; }
+        
+    }
 }

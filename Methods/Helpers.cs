@@ -61,7 +61,7 @@ namespace WeatherApp5.Methods
         {
             string path = "../../../Data/";
 
-            List<WeatherData> weatherData = RegexData.GetData();
+            List<IWeatherDate> weatherData = RegexData.GetData();
             Dictionary<string, double> data = new Dictionary<string, double>();
 
 
@@ -106,7 +106,7 @@ namespace WeatherApp5.Methods
         {
             string path = "../../../Data/";
 
-            List<WeatherData> weatherData = RegexData.GetData();
+            List<IWeatherDate> weatherData = RegexData.GetData();
             Dictionary<string, double> data = new Dictionary<string, double>();
 
 
@@ -149,7 +149,7 @@ namespace WeatherApp5.Methods
         }
         internal static void SaveFiles()
         {
-            Helpers.SaveTempsToFile(6, 1, 30, "Inne", "Juni");
+            Helpers.SaveTempsToFile(6, 1, 30, "Inne", "Juni");              // ta en paus en stund, detta kan ta ett tag :)
             Helpers.SaveTempsToFile(6, 1, 30, "Ute", "Juni");
             Helpers.SaveTempsToFile(7, 1, 31, "Inne", "Juli");
             Helpers.SaveTempsToFile(7, 1, 31, "Ute", "Juli");
@@ -191,7 +191,7 @@ namespace WeatherApp5.Methods
         {
             string path = "../../../Data/";
 
-            List<WeatherData> weatherData = RegexData.GetData();
+            List<IWeatherDate> weatherData = RegexData.GetData();
             Dictionary<string, double> data = new Dictionary<string, double>();
 
 
