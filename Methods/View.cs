@@ -136,7 +136,34 @@ namespace WeatherApp5.Methods
 
         internal static void MoldRisk()
         {
-           
+            List<WeatherData> weatherData = RegexData.GetData();
+            Dictionary<string, double> data = new Dictionary<string, double>();
+
+            DateTime StartDate = new DateTime(2016, 6, 1);
+            DateTime EndDate = new DateTime(2016, 12, 31);
+            int DayInterval = 1;
+
+            while (StartDate.AddDays(DayInterval) <= EndDate)
+            {
+                var chosenData = weatherData.Where(x => x.Date.Date == StartDate).Where(x => x.Location == "Ute").Where(x => x.Temperature > 0).Where(x => x.Humidity > 70).ToList();
+                double result = 0;
+                foreach (var c in chosenData)
+                {
+                    result = (c.Temperature + c.Humidity) / 2;
+                }
+
+                if (result != 0)
+                {
+                    data.Add(StartDate.ToString("yyyy-MM-dd"), Math.Round(result, 1));
+                }
+
+                StartDate = StartDate.AddDays(DayInterval);
+            }
+            foreach (var d in data)
+            {
+                double riskForMold = d.Value * 1.33;
+                Console.WriteLine(d.Key + " mögelrisken är " + Math.Round(riskForMold, 2)  + " på en skala mellan 0-100");
+            }
         }
         internal static void MeterologicDates()
         {
