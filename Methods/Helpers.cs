@@ -8,7 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace WeatherApp5.Methods
 {
-    internal class Helpers
+    internal static class Helpers
     {
         public static int TryNumber(int maxValue, int minValue)
         {
@@ -98,7 +98,7 @@ namespace WeatherApp5.Methods
             }
             double monthAvrg = monthTempCounter / data.Count();
             
-            File.AppendAllText(path + "SavedTemps.txt", $"{monthName}s medeltemp {location} är: {Math.Round(monthAvrg, 1)}\n");
+            File.AppendAllText(path + "Log.txt", $"{monthName}s medeltemp {location} är: {Math.Round(monthAvrg, 1)}\n");
             
         }
         internal static void SaveHumidityToFile(int month, int startDay, int endDay, string location, string monthName)
@@ -143,7 +143,7 @@ namespace WeatherApp5.Methods
             }
             double monthAvrg = monthTempCounter / data.Count();
 
-            File.AppendAllText(path + "SavedHumidity.txt", $"{monthName}s medelfuktighet {location} är: {Math.Round(monthAvrg, 1)}%\n");
+            File.AppendAllText(path + "Log.txt", $"{monthName}s medelfuktighet {location} är: {Math.Round(monthAvrg, 1)}%\n");
 
         }
         internal static void SaveFiles()
@@ -176,6 +176,12 @@ namespace WeatherApp5.Methods
             Helpers.SaveHumidityToFile(11, 1, 30, "Ute", "November");
             Helpers.SaveHumidityToFile(12, 1, 31, "Inne", "December");
             Helpers.SaveHumidityToFile(12, 1, 31, "Ute", "December");
+        }
+        public static void ViewBox(this string input)
+        {
+            Console.WriteLine(new String('-', input.Length + 4));
+            Console.WriteLine("| " + input + " |");
+            Console.WriteLine(new String('-', input.Length + 4));
         }
     }
 }

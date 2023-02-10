@@ -24,7 +24,7 @@ namespace WeatherApp5.Methods
 
             Console.Write("Välj en dag för att kolla medeltemp: (YYYY-MM-DD): ");
             string date = Console.ReadLine();
-            
+
             string input = Helpers.SelectedLocation();
 
             var chosenData = weatherData.Where(x => x.Date.Date == DateTime.Parse(date)).Where(x => x.Location == input).ToList();
@@ -136,45 +136,19 @@ namespace WeatherApp5.Methods
 
         internal static void MoldRisk()
         {
-            //List<WeatherData> weatherData = RegexData.GetData();
-
-            //DateTime StartDate = new DateTime(2016, 6, 1);
-            //DateTime EndDate = new DateTime(2016, 12, 31);
-            //int DayInterval = 1;
-
-            //string input = Helpers.SelectedLocation();
-            //while (StartDate.AddDays(DayInterval) <= EndDate)
-            //{
-            //    var chosenData = weatherData.Where(x => x.Date.Date == StartDate).Where(x => x.Location == input).ToList();
-            //    double result = 0;
-            //    double temp = 0;
-            //    double humidity = 0;
-            //    foreach (var c in chosenData)
-            //    {                    
-            //        temp += c.Temperature;
-            //        humidity += c.Humidity;
-            //    }
-            //    //double result = counter / chosenData.Count;
-
-            //    if (!double.IsNaN(result))
-            //    {
-            //        //Console.WriteLine(StartDate.ToString("yyyy-MM-dd") + " - Medeltemp: " + Math.Round(result, 1) + "°");
-            //        data.Add(StartDate.ToString("yyyy-MM-dd"), Math.Round(result, 1));
-            //    }
-
-            //    StartDate = StartDate.AddDays(DayInterval);
-            //}
+           
         }
         internal static void MeterologicDates()
         {
+            string savePath = "../../../Data/";
             List<WeatherData> weatherData = RegexData.GetData();
             Dictionary<string, double> data = new Dictionary<string, double>();
-
+            List<string> meterologicDates = new List<string>();
             DateTime StartDate = new DateTime(2016, 8, 1);
             DateTime EndDate = new DateTime(2016, 12, 31);
             int DayInterval = 1;
 
-            
+
             while (StartDate.AddDays(DayInterval) <= EndDate)
             {
                 var chosenData = weatherData.Where(x => x.Date.Date == StartDate).Where(x => x.Location == "Ute").ToList();
@@ -195,52 +169,55 @@ namespace WeatherApp5.Methods
             }
 
             var dataList = data.OrderBy(x => x.Key).ToList();
+            string meterologicAutumn = "";
+            string meterologicWinter = "";
 
             int i = 0;
-            Console.WriteLine("1. Visa meterologisk höst\n2. Visa meterologisk vinter");
-            int input = Helpers.TryNumber(2, 1);
-            switch (input)
+            while (i < dataList.Count)
             {
-                case 1:
-                    while (i < dataList.Count)
-                    {
-                        if (dataList[i].Value < 10 && dataList[i - 1].Value < 10 && dataList[i - 2].Value < 10 && dataList[i - 3].Value < 10 && dataList[i - 4].Value < 10)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine(dataList[i - 5].Key + " " + dataList[i - 5].Value + " °C");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine(dataList[i - 4].Key + " " + dataList[i - 4].Value + " °C" + " meterologisk höst för 2016 inträffar detta datum");
-                            Console.WriteLine(dataList[i - 3].Key + " " + dataList[i - 3].Value + " °C");
-                            Console.WriteLine(dataList[i - 2].Key + " " + dataList[i - 2].Value + " °C");
-                            Console.WriteLine(dataList[i - 1].Key + " " + dataList[i - 1].Value + " °C");
-                            Console.WriteLine(dataList[i].Key + " " + dataList[i].Value + " °C");
-                            Console.ResetColor();
-                            break;
-                        }
-                        i++;
-                    }
+                if (dataList[i].Value < 10 && dataList[i - 1].Value < 10 && dataList[i - 2].Value < 10 && dataList[i - 3].Value < 10 && dataList[i - 4].Value < 10)
+                {
+                    Console.WriteLine("HÖST\n------------------------------------------");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(dataList[i - 5].Key + " " + dataList[i - 5].Value + " °C");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    string text = dataList[i - 4].Key + " " + dataList[i - 4].Value + " °C" + " meterologisk höst för 2016 inträffar detta datum";
+                    text.ViewBox();
+                    meterologicAutumn = dataList[i - 4].Key + " " + dataList[i - 4].Value + " °C" + " meterologisk höst för 2016 inträffar detta datum";
+                    meterologicDates.Add(meterologicAutumn);
+                    Console.WriteLine(dataList[i - 3].Key + " " + dataList[i - 3].Value + " °C");
+                    Console.WriteLine(dataList[i - 2].Key + " " + dataList[i - 2].Value + " °C");
+                    Console.WriteLine(dataList[i - 1].Key + " " + dataList[i - 1].Value + " °C");
+                    Console.WriteLine(dataList[i].Key + " " + dataList[i].Value + " °C");
+                    Console.ResetColor();
                     break;
-                case 2:
-                    while (i < dataList.Count)
-                    {
-                        if (dataList[i].Value < 0 && dataList[i - 1].Value < 0 && dataList[i - 2].Value < 0 && dataList[i - 3].Value < 0)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine(dataList[i - 4].Key + " " + dataList[i - 4].Value + " °C");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine(dataList[i - 3].Key + " " + dataList[i - 3].Value + " °C" + " meterologisk vinter för 2016 inträffar detta datum, ish");
-                            Console.WriteLine(dataList[i - 2].Key + " " + dataList[i - 2].Value + " °C");
-                            Console.WriteLine(dataList[i - 1].Key + " " + dataList[i - 1].Value + " °C");
-                            Console.WriteLine(dataList[i].Key + " " + dataList[i].Value + " °C");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine(dataList[i + 1].Key + " " + dataList[i + 1].Value + " °C");
-                            Console.ResetColor();
-                            break;
-                        }
-                        i++;
-                    }
+                }
+                i++;
+            }
+            i = 0;
+            while (i < dataList.Count)
+            {
+                if (dataList[i].Value < 0 && dataList[i - 1].Value < 0 && dataList[i - 2].Value < 0 && dataList[i - 3].Value < 0)
+                {
+                    Console.WriteLine("VINTER\n----------------------------------------");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(dataList[i - 4].Key + " " + dataList[i - 4].Value + " °C");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    string text = dataList[i - 3].Key + " " + dataList[i - 3].Value + " °C" + " meterologisk vinter för 2016 inträffar detta datum, ish";
+                    text.ViewBox();
+                    meterologicWinter = dataList[i - 3].Key + " " + dataList[i - 3].Value + " °C" + " meterologisk vinter för 2016 inträffar detta datum, ish";
+                    meterologicDates.Add(meterologicWinter);
+                    Console.WriteLine(dataList[i - 2].Key + " " + dataList[i - 2].Value + " °C");
+                    Console.WriteLine(dataList[i - 1].Key + " " + dataList[i - 1].Value + " °C");
+                    Console.WriteLine(dataList[i].Key + " " + dataList[i].Value + " °C");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(dataList[i + 1].Key + " " + dataList[i + 1].Value + " °C");
+                    Console.ResetColor();
                     break;
-            } 
+                }
+                i++;
+            }
+            File.AppendAllText(savePath + "Log.txt", $"{meterologicDates[0]}\n{meterologicDates[1]}\n");
         }
     }
 }
