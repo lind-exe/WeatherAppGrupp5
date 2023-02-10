@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherApp5.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WeatherApp5.Methods
 {
@@ -53,6 +55,127 @@ namespace WeatherApp5.Methods
             Console.ResetColor();
             Console.Clear();
             Menus.Show("Main");
+        }
+        internal static void SaveTempsToFile(int month, int startDay, int endDay, string location, string monthName)
+        {
+            string path = "../../../Data/";
+
+            List<WeatherData> weatherData = RegexData.GetData();
+            Dictionary<string, double> data = new Dictionary<string, double>();
+
+
+            DateTime StartDate = new DateTime(2016, month, startDay);
+            DateTime EndDate = new DateTime(2016, month, endDay);
+            int DayInterval = 1;
+
+            while (StartDate.AddDays(DayInterval) <= EndDate)
+            {
+                var chosenData = weatherData.Where(x => x.Date.Date == StartDate).Where(x => x.Location == location).ToList();
+                double tempCounter = 0;
+                
+
+                foreach (var c in chosenData)
+                {
+                    tempCounter += c.Temperature;
+                    
+                }
+                double tempResult = tempCounter / chosenData.Count;
+                
+
+                if (!double.IsNaN(tempResult))
+                {
+                    data.Add(StartDate.ToString("yyyy-MM-dd"), Math.Round(tempResult, 1));
+                }
+
+                StartDate = StartDate.AddDays(DayInterval);
+            }
+
+            double monthTempCounter = 0;
+
+            foreach (var c in data)
+            {
+                monthTempCounter += c.Value;
+            }
+            double monthAvrg = monthTempCounter / data.Count();
+            
+            File.AppendAllText(path + "SavedTemps.txt", $"{monthName}s medeltemp {location} är: {Math.Round(monthAvrg, 1)}\n");
+            
+        }
+        internal static void SaveHumidityToFile(int month, int startDay, int endDay, string location, string monthName)
+        {
+            string path = "../../../Data/";
+
+            List<WeatherData> weatherData = RegexData.GetData();
+            Dictionary<string, double> data = new Dictionary<string, double>();
+
+
+            DateTime StartDate = new DateTime(2016, month, startDay);
+            DateTime EndDate = new DateTime(2016, month, endDay);
+            int DayInterval = 1;
+
+            while (StartDate.AddDays(DayInterval) <= EndDate)
+            {
+                var chosenData = weatherData.Where(x => x.Date.Date == StartDate).Where(x => x.Location == location).ToList();
+                double humidityCounter = 0;
+
+
+                foreach (var c in chosenData)
+                {
+                    humidityCounter += c.Humidity;
+
+                }
+                double humidityResult = humidityCounter / chosenData.Count;
+
+
+                if (!double.IsNaN(humidityResult))
+                {
+                    data.Add(StartDate.ToString("yyyy-MM-dd"), Math.Round(humidityResult, 1));
+                }
+
+                StartDate = StartDate.AddDays(DayInterval);
+            }
+
+            double monthTempCounter = 0;
+
+            foreach (var c in data)
+            {
+                monthTempCounter += c.Value;
+            }
+            double monthAvrg = monthTempCounter / data.Count();
+
+            File.AppendAllText(path + "SavedHumidity.txt", $"{monthName}s medelfuktighet {location} är: {Math.Round(monthAvrg, 1)}%\n");
+
+        }
+        internal static void SaveFiles()
+        {
+            Helpers.SaveTempsToFile(6, 1, 30, "Inne", "Juni");
+            Helpers.SaveTempsToFile(6, 1, 30, "Ute", "Juni");
+            Helpers.SaveTempsToFile(7, 1, 31, "Inne", "Juli");
+            Helpers.SaveTempsToFile(7, 1, 31, "Ute", "Juli");
+            Helpers.SaveTempsToFile(8, 1, 31, "Inne", "Augusti");
+            Helpers.SaveTempsToFile(8, 1, 31, "Ute", "Augusti");
+            Helpers.SaveTempsToFile(9, 1, 30, "Inne", "September");
+            Helpers.SaveTempsToFile(9, 1, 30, "Ute", "September");
+            Helpers.SaveTempsToFile(10, 1, 31, "Inne", "Oktober");
+            Helpers.SaveTempsToFile(10, 1, 31, "Ute", "Oktober");
+            Helpers.SaveTempsToFile(11, 1, 30, "Inne", "November");
+            Helpers.SaveTempsToFile(11, 1, 30, "Ute", "November");
+            Helpers.SaveTempsToFile(12, 1, 31, "Inne", "December");
+            Helpers.SaveTempsToFile(12, 1, 31, "Ute", "December");
+            Helpers.SaveHumidityToFile(6, 1, 30, "Inne", "Juni");
+            Helpers.SaveHumidityToFile(6, 1, 30, "Ute", "Juni");
+            Helpers.SaveHumidityToFile(7, 1, 31, "Inne", "Juli");
+            Helpers.SaveHumidityToFile(7, 1, 31, "Ute", "Juli");
+            Helpers.SaveHumidityToFile(8, 1, 31, "Inne", "Augusti");
+            Helpers.SaveHumidityToFile(8, 1, 31, "Ute", "Augusti");
+            Helpers.SaveHumidityToFile(9, 1, 30, "Inne", "September");
+            Helpers.SaveHumidityToFile(9, 1, 30, "Ute", "September");
+            Helpers.SaveHumidityToFile(10, 1, 31, "Inne", "Oktober");
+            Helpers.SaveHumidityToFile(10, 1, 31, "Ute", "Oktober");
+            Helpers.SaveHumidityToFile(11, 1, 30, "Inne", "November");
+            Helpers.SaveHumidityToFile(11, 1, 30, "Ute", "November");
+            Helpers.SaveHumidityToFile(12, 1, 31, "Inne", "December");
+            Helpers.SaveHumidityToFile(12, 1, 31, "Ute", "December");
         }
     }
 }
