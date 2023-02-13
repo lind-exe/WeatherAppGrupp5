@@ -32,7 +32,7 @@ namespace WeatherApp5.Methods
 
             foreach (var c in chosenData)
             {
-                Console.WriteLine(c.Date + " " + c.Location + " " + c.Temperature + " " + c.Humidity);
+                //Console.WriteLine(c.Date + " " + c.Location + " " + c.Temperature + " " + c.Humidity);
                 counter += c.Temperature;
             }
             double result = counter / chosenData.Count;
